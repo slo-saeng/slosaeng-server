@@ -1,4 +1,4 @@
-package com.server.slosaeng.domain.member.application;
+package com.server.slosaeng.global.auth.application;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,4 +1,4 @@
-package com.server.slosaeng.global.config.jwt;
+package com.server.slosaeng.global.auth.jwt;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

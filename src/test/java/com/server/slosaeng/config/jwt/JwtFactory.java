@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 
-import com.server.slosaeng.global.config.jwt.JwtProperties;
+import com.server.slosaeng.global.auth.jwt.JwtProperties;
 
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;

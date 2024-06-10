@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.server.slosaeng.domain.member.application.MemberDetailService;
+import com.server.slosaeng.global.auth.application.MemberDetailService;
 
 import lombok.RequiredArgsConstructor;
 

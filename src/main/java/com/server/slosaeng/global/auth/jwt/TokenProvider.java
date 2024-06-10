@@ -1,4 +1,4 @@
-package com.server.slosaeng.global.config.jwt;
+package com.server.slosaeng.global.auth.jwt;
 
 import java.time.Duration;
 import java.util.Collections;

@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.server.slosaeng.domain.member.dao.MemberRepository;
 import com.server.slosaeng.domain.member.domain.Member;
-import com.server.slosaeng.global.config.jwt.JwtProperties;
-import com.server.slosaeng.global.config.jwt.TokenProvider;
+import com.server.slosaeng.global.auth.jwt.JwtProperties;
+import com.server.slosaeng.global.auth.jwt.TokenProvider;
 
 import io.jsonwebtoken.Jwts;
 

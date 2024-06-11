@@ -33,9 +33,9 @@ public class TokenProvider {
 		return Jwts.builder()
 			.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
 			.setIssuer(jwtProperties.getIssuer())
-			.setSubject(member.getId())
 			.setIssuedAt(now)
 			.setExpiration(expiry)
+			.setSubject(member.getId())
 			.claim("id", member.getId())
 			.signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
 			.compact();

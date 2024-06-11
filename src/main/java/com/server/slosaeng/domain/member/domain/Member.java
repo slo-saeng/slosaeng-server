@@ -10,19 +10,22 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Entity
+@SuperBuilder
 @Table(name = "member")
+@DiscriminatorColumn(name = "D_TYPE")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member implements UserDetails {
@@ -41,8 +44,7 @@ public class Member implements UserDetails {
 	@Column(name = "joined_at", updatable = false, nullable = false)
 	private LocalDateTime joinedAt;
 
-	@Builder
-	public Member(String id, String password, String name, String auth) {
+	public Member(String id, String password, String name) {
 		this.id = id;
 		this.password = password;
 		this.name = name;

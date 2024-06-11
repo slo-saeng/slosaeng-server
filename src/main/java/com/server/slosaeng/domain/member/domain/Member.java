@@ -64,4 +64,12 @@ public class Member implements UserDetails {
 	public String getUsername() {
 		return id;
 	}
+
+	public void updatePassword(String password) {
+		this.password = password;
+	}
+
+	public void updateName(String name) {
+		this.name = name;
+	}
 }

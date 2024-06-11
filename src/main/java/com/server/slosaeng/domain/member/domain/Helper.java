@@ -28,4 +28,16 @@ public class Helper extends Member {
 
 	@ElementCollection
 	private List<Long> elderIds;
+
+	public void updatePhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void updateIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+
+	public void updateElderIds(List<Long> elderIds) {
+		this.elderIds = elderIds;
+	}
 }

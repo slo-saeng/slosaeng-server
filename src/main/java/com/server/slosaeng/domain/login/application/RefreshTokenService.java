@@ -21,4 +21,8 @@ public class RefreshTokenService {
 		RefreshToken newRefreshToken = new RefreshToken(memberId, refreshToken);
 		refreshTokenRepository.save(newRefreshToken);
 	}
+
+	public void delete(String memberId) {
+		refreshTokenRepository.deleteByMemberId(memberId);
+	}
 }

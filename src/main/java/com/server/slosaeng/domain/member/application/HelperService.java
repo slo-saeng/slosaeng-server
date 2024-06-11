@@ -20,6 +20,9 @@ public class HelperService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public String save(HelperRequestDto helperRequestDto) {
+		if (isExistHelper(helperRequestDto.getId())) {
+			throw new IllegalArgumentException("Duplicate helper id");
+		}
 		return helperRepository.save(Helper.builder()
 			.id(helperRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(helperRequestDto.getPassword()))
@@ -56,7 +59,11 @@ public class HelperService {
 
 	private Helper findHelperById(String helperId) {
 		return helperRepository.findById(helperId).orElseThrow(
-			() -> new IllegalArgumentException("해당 보호자가 존재하지 않습니다.")
+			() -> new IllegalArgumentException("Helper not found")
 		);
+	}
+
+	private boolean isExistHelper(String helperId) {
+		return helperRepository.existsById(helperId);
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.server.slosaeng.domain.member.application.MemberService;
-import com.server.slosaeng.domain.member.dto.request.JoinDto;
+import com.server.slosaeng.domain.member.dto.request.AddMemberRequestDto;
 import com.server.slosaeng.global.common.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,9 +24,9 @@ public class MemberController {
 	@PostMapping("")
 	@Operation(summary = "회원 생성")
 	public ApiResponse<?> createMember(
-		@RequestBody JoinDto joinDto
+		@RequestBody AddMemberRequestDto addMemberRequestDto
 	) {
-		String id = memberService.save(joinDto);
+		String id = memberService.save(addMemberRequestDto);
 		return ApiResponse.success(id, "회원 가입 성공");
 	}
 }

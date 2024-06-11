@@ -1,6 +1,6 @@
 package com.server.slosaeng.config.jwt;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptyMap;
 
 import java.time.Duration;
 import java.util.Date;
@@ -16,7 +16,7 @@ import lombok.Getter;
 
 @Getter
 public class JwtFactory {
-	private String subject = "test";
+	private String subject = "slosaeng";
 	private Date issuedAt = new Date();
 	private Date expiration = new Date(issuedAt.getTime() + Duration.ofDays(14).toMillis());
 	private Map<String, Object> claims = emptyMap();

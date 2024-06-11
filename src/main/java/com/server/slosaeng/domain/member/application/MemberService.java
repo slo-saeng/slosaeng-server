@@ -17,6 +17,9 @@ public class MemberService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public String save(AddMemberRequestDto addMemberRequestDto) {
+		if (isExistMember(addMemberRequestDto.getId())) {
+			throw new IllegalArgumentException("Duplicate member id");
+		}
 		return memberRepository.save(Member.builder()
 			.id(addMemberRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(addMemberRequestDto.getPassword()))
@@ -27,5 +30,9 @@ public class MemberService {
 	public Member findById(String id) {
 		return memberRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("Unexpected member"));
+	}
+
+	private boolean isExistMember(String id) {
+		return memberRepository.existsById(id);
 	}
 }

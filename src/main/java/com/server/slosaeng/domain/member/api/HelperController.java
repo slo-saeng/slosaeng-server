@@ -30,7 +30,7 @@ public class HelperController {
 		@RequestBody HelperRequestDto helperRequestDto
 	) {
 		String id = helperService.save(helperRequestDto);
-		return ApiResponse.success(id, "보호자 가입 성공");
+		return ApiResponse.success(id, "Creating helper succeed");
 	}
 
 	@GetMapping("/{helperId}")
@@ -38,7 +38,7 @@ public class HelperController {
 	public ApiResponse<?> getHelper(
 		@PathVariable String helperId
 	) {
-		return ApiResponse.success(helperService.findById(helperId), "보호자 조회 성공");
+		return ApiResponse.success(helperService.findById(helperId), "Reading helper succeed");
 	}
 
 	@PatchMapping("/{helperId}")
@@ -48,7 +48,7 @@ public class HelperController {
 		@RequestBody HelperRequestDto helperRequestDto
 	) {
 		helperService.update(helperId, helperRequestDto);
-		return ApiResponse.success(null, "보호자 정보 수정 성공");
+		return ApiResponse.success(null, "Updating helper succeed");
 	}
 
 	@DeleteMapping("/{helperId}")
@@ -57,7 +57,7 @@ public class HelperController {
 		@PathVariable String helperId
 	) {
 		helperService.delete(helperId);
-		return ApiResponse.success(null, "보호자 탈퇴 성공");
+		return ApiResponse.success(null, "Deleting helper succeed");
 	}
 
 }

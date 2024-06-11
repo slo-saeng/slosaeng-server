@@ -27,6 +27,6 @@ public class MemberController {
 		@RequestBody AddMemberRequestDto addMemberRequestDto
 	) {
 		String id = memberService.save(addMemberRequestDto);
-		return ApiResponse.success(id, "회원 가입 성공");
+		return ApiResponse.success(id, "Creating Member succeed");
 	}
 }

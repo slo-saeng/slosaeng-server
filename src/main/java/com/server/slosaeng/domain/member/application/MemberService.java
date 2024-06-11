@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.member.dao.MemberRepository;
 import com.server.slosaeng.domain.member.domain.Member;
+import com.server.slosaeng.domain.member.domain.Role;
 import com.server.slosaeng.domain.member.dto.request.AddMemberRequestDto;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class MemberService {
 			.id(addMemberRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(addMemberRequestDto.getPassword()))
 			.name(addMemberRequestDto.getName())
+			.role(Role.HELPER)
 			.build()).getId();
 	}
 

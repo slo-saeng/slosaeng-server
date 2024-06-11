@@ -2,7 +2,7 @@ package com.server.slosaeng.domain.member.domain;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -40,19 +42,23 @@ public class Member implements UserDetails {
 	@Column(nullable = false)
 	private String name;
 
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
 	@CreationTimestamp
 	@Column(name = "joined_at", updatable = false, nullable = false)
 	private LocalDateTime joinedAt;
 
-	public Member(String id, String password, String name) {
+	public Member(String id, String password, String name, Role role) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
+		this.role = role;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("user"));
+		return Collections.singletonList(new SimpleGrantedAuthority(getRole().getKey()));
 	}
 
 	@Override

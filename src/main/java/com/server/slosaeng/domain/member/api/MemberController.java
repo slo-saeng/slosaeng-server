@@ -9,16 +9,20 @@ import com.server.slosaeng.domain.member.application.MemberService;
 import com.server.slosaeng.domain.member.dto.request.JoinDto;
 import com.server.slosaeng.global.common.ApiResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Tag(name = "Member", description = "회원 관리")
 public class MemberController {
 
 	private final MemberService memberService;
 
 	@PostMapping("")
+	@Operation(summary = "회원 생성")
 	public ApiResponse<?> createMember(
 		@RequestBody JoinDto joinDto
 	) {

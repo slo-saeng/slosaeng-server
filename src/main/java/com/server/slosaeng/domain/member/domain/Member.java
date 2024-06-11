@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class Member implements UserDetails {
 
 	@Id
-	@Column(nullable = false, updatable = false, unique = true)
+	@Column(nullable = false, unique = true)
 	private String id;
 
 	@Column(nullable = false)
@@ -50,7 +50,7 @@ public class Member implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+		return List.of(new SimpleGrantedAuthority("user"));
 	}
 
 	@Override
@@ -60,6 +60,6 @@ public class Member implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return name;
+		return id;
 	}
 }

@@ -1,7 +1,6 @@
 package com.server.slosaeng.global.auth.application;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.member.dao.MemberRepository;
@@ -15,8 +14,8 @@ public class MemberDetailService implements UserDetailsService {
 	private final MemberRepository memberRepository;
 
 	@Override
-	public Member loadUserByUsername(String username) {
-		return memberRepository.findById(username)
-			.orElseThrow(() -> new UsernameNotFoundException("Member not found"));
+	public Member loadUserByUsername(String id) {
+		return memberRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException((id)));
 	}
 }

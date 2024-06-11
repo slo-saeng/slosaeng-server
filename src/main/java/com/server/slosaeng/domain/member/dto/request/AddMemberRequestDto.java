@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JoinDto {
+public class AddMemberRequestDto {
 
 	@NotNull
 	@Schema(description = "아이디", example = "leehaneum")

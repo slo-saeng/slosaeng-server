@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import com.server.slosaeng.domain.login.application.RefreshTokenService;
 import com.server.slosaeng.domain.member.dao.HelperRepository;
 import com.server.slosaeng.domain.member.domain.Helper;
+import com.server.slosaeng.domain.member.domain.Role;
 import com.server.slosaeng.domain.member.dto.request.HelperRequestDto;
+import com.server.slosaeng.domain.member.dto.request.HelperUpdateDto;
 import com.server.slosaeng.domain.member.dto.response.HelperResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class HelperService {
 			.id(helperRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(helperRequestDto.getPassword()))
 			.name(helperRequestDto.getName())
+			.role(Role.HELPER)
 			.phone(helperRequestDto.getPhone())
 			.idNumber(helperRequestDto.getIdNumber())
 			.build()).getId();
@@ -37,18 +40,19 @@ public class HelperService {
 		return HelperResponseDto.builder()
 			.id(helper.getId())
 			.name(helper.getName())
+			.role(helper.getRole())
 			.phone(helper.getPhone())
 			.idNumber(helper.getIdNumber())
 			.elderIds(helper.getElderIds())
 			.build();
 	}
 
-	public void update(String helperId, HelperRequestDto helperRequestDto) {
+	public void update(String helperId, HelperUpdateDto helperUpdateDto) {
 		Helper helper = findHelperById(helperId);
-		helper.updatePassword(bCryptPasswordEncoder.encode(helperRequestDto.getPassword()));
-		helper.updateName(helperRequestDto.getName());
-		helper.updatePhone(helperRequestDto.getPhone());
-		helper.updateIdNumber(helperRequestDto.getIdNumber());
+		helper.updatePassword(bCryptPasswordEncoder.encode(helperUpdateDto.getPassword()));
+		helper.updateName(helperUpdateDto.getName());
+		helper.updatePhone(helperUpdateDto.getPhone());
+		helper.updateIdNumber(helperUpdateDto.getIdNumber());
 		helperRepository.save(helper);
 	}
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.server.slosaeng.domain.member.application.HelperService;
 import com.server.slosaeng.domain.member.dto.request.HelperRequestDto;
+import com.server.slosaeng.domain.member.dto.request.HelperUpdateDto;
 import com.server.slosaeng.global.common.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,16 +42,18 @@ public class HelperController {
 		return ApiResponse.success(helperService.findById(helperId), "Reading helper succeed");
 	}
 
+	// @Secured("ROLE_HELPER")
 	@PatchMapping("/{helperId}")
 	@Operation(summary = "보호자 정보 수정")
 	public ApiResponse<?> updateHelper(
 		@PathVariable String helperId,
-		@RequestBody HelperRequestDto helperRequestDto
+		@RequestBody HelperUpdateDto helperUpdateDto
 	) {
-		helperService.update(helperId, helperRequestDto);
+		helperService.update(helperId, helperUpdateDto);
 		return ApiResponse.success(null, "Updating helper succeed");
 	}
 
+	// @PreAuthorize("isAuthenticated()")
 	@DeleteMapping("/{helperId}")
 	@Operation(summary = "보호자 탈퇴")
 	public ApiResponse<?> deleteHelper(

@@ -11,6 +11,7 @@ import com.server.slosaeng.domain.member.dto.request.HelperRequestDto;
 import com.server.slosaeng.domain.member.dto.request.HelperUpdateDto;
 import com.server.slosaeng.domain.member.dto.response.HelperResponseDto;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -56,6 +57,7 @@ public class HelperService {
 		helperRepository.save(helper);
 	}
 
+	@Transactional
 	public void delete(String helperId) {
 		refreshTokenService.delete(helperId);
 		helperRepository.deleteById(helperId);

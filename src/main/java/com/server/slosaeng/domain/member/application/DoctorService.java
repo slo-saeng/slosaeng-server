@@ -10,6 +10,7 @@ import com.server.slosaeng.domain.member.domain.Role;
 import com.server.slosaeng.domain.member.dto.request.DoctorRequestDto;
 import com.server.slosaeng.domain.member.dto.response.DoctorResponseDto;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,7 +26,7 @@ public class DoctorService {
 		}
 		return doctorRepository.save(Doctor.builder()
 			.id(doctorRequestDto.getId())
-			.password(doctorRequestDto.getPassword())
+			.password(bCryptPasswordEncoder.encode(doctorRequestDto.getPassword()))
 			.name(doctorRequestDto.getName())
 			.role(Role.DOCTOR)
 			.position(doctorRequestDto.getPosition())
@@ -56,6 +57,7 @@ public class DoctorService {
 		doctorRepository.save(doctor);
 	}
 
+	@Transactional
 	public void delete(String doctorId) {
 		refreshTokenService.delete(doctorId);
 		doctorRepository.deleteById(doctorId);

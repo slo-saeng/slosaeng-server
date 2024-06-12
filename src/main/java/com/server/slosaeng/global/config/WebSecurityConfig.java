@@ -57,7 +57,7 @@ public class WebSecurityConfig {
 				).permitAll()
 				.requestMatchers(
 					new AntPathRequestMatcher("/access-token")
-				).permitAll()
+				).authenticated()
 				.anyRequest().permitAll()
 			)
 			.build();

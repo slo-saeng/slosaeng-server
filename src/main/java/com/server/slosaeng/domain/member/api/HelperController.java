@@ -50,7 +50,7 @@ public class HelperController {
 		@RequestBody HelperUpdateDto helperUpdateDto
 	) {
 		helperService.update(helperId, helperUpdateDto);
-		return ApiResponse.success(null, "Updating helper succeed");
+		return ApiResponse.success(true, "Updating helper succeed");
 	}
 
 	// @PreAuthorize("isAuthenticated()")
@@ -60,7 +60,7 @@ public class HelperController {
 		@PathVariable String helperId
 	) {
 		helperService.delete(helperId);
-		return ApiResponse.success(null, "Deleting helper succeed");
+		return ApiResponse.success(true, "Deleting helper succeed");
 	}
 
 }

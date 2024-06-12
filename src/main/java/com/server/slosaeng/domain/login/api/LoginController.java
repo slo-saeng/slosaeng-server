@@ -2,7 +2,6 @@ package com.server.slosaeng.domain.login.api;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.server.slosaeng.domain.login.application.LoginService;
@@ -18,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
 @Tag(name = "auth", description = "로그인 관리")
 public class LoginController {
 	private final LoginService loginService;
@@ -32,7 +30,7 @@ public class LoginController {
 		return ApiResponse.success(loginResponseDto, "login success");
 	}
 
-	@PostMapping("/new-access-token")
+	@PostMapping("/access-token")
 	@Operation(summary = "새로운 액세스 토큰 발급")
 	public ApiResponse<CreateAccessTokenResponse> createNewAccessToken(
 		@RequestBody CreateAccessTokenRequest request

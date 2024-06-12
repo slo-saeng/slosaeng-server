@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.member.dao.MemberRepository;
 import com.server.slosaeng.domain.member.domain.Member;
-import com.server.slosaeng.domain.member.dto.request.JoinDto;
+import com.server.slosaeng.domain.member.domain.Role;
+import com.server.slosaeng.domain.member.dto.request.AddMemberRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,16 +17,24 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public String save(JoinDto joinDto) {
+	public String save(AddMemberRequestDto addMemberRequestDto) {
+		if (isExistMember(addMemberRequestDto.getId())) {
+			throw new IllegalArgumentException("Duplicate member id");
+		}
 		return memberRepository.save(Member.builder()
-			.id(joinDto.getId())
-			.password(bCryptPasswordEncoder.encode(joinDto.getPassword()))
-			.name(joinDto.getName())
+			.id(addMemberRequestDto.getId())
+			.password(bCryptPasswordEncoder.encode(addMemberRequestDto.getPassword()))
+			.name(addMemberRequestDto.getName())
+			.role(Role.HELPER)
 			.build()).getId();
 	}
 
 	public Member findById(String id) {
 		return memberRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("Unexpected member"));
+	}
+
+	private boolean isExistMember(String id) {
+		return memberRepository.existsById(id);
 	}
 }

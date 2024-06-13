@@ -1,5 +1,8 @@
 package com.server.slosaeng.domain.member.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +50,20 @@ public class DoctorService {
 			.birth(doctor.getBirth())
 			.institutionNumber(doctor.getInstitutionNumber())
 			.build();
+	}
+
+	public List<DoctorResponseDto> findNotApprovedDoctors() {
+		return doctorRepository.findByRole(Role.NOT_APPROVED).stream()
+			.map(doctor -> DoctorResponseDto.builder()
+				.id(doctor.getId())
+				.name(doctor.getName())
+				.role(doctor.getRole())
+				.position(doctor.getPosition())
+				.phone(doctor.getPhone())
+				.birth(doctor.getBirth())
+				.institutionNumber(doctor.getInstitutionNumber())
+				.build())
+			.collect(Collectors.toList());
 	}
 
 	public void update(String doctorId, DoctorRequestDto doctorRequestDto) {

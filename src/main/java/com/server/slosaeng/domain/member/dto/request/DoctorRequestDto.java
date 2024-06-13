@@ -32,4 +32,8 @@ public class DoctorRequestDto {
 	@NotNull
 	@Schema(description = "생년월일", example = "19990101")
 	private String birth;
+
+	@NotNull
+	@Schema(description = "요양기관번호", example = "1140292")
+	private Long institutionNumber;
 }

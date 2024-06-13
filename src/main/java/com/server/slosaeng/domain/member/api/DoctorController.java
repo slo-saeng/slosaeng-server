@@ -1,5 +1,7 @@
 package com.server.slosaeng.domain.member.api;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.server.slosaeng.domain.member.application.DoctorService;
 import com.server.slosaeng.domain.member.dto.request.DoctorRequestDto;
+import com.server.slosaeng.domain.member.dto.response.DoctorResponseDto;
 import com.server.slosaeng.global.common.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +42,13 @@ public class DoctorController {
 		@PathVariable String doctorId
 	) {
 		return ApiResponse.success(doctorService.findById(doctorId), "Reading doctor succeed");
+	}
+
+	@GetMapping("/not-approved")
+	@Operation(summary = "미승인 의료진 조회")
+	public ApiResponse<?> getNotApprovedDoctors() {
+		List<DoctorResponseDto> notApprovedDoctors = doctorService.findNotApprovedDoctors();
+		return ApiResponse.success(notApprovedDoctors, "Reading not approved doctors succeed");
 	}
 
 	@PatchMapping("/{doctorId}")

@@ -18,11 +18,25 @@ public class RefreshTokenService {
 	}
 
 	public void save(String memberId, String refreshToken) {
-		RefreshToken newRefreshToken = new RefreshToken(memberId, refreshToken);
-		refreshTokenRepository.save(newRefreshToken);
+		if (isExistRefreshToken(memberId)) {
+			RefreshToken refreshTokenEntity = findByMemberId(memberId);
+			refreshTokenEntity.update(refreshToken);
+		} else {
+			RefreshToken newRefreshToken = new RefreshToken(memberId, refreshToken);
+			refreshTokenRepository.save(newRefreshToken);
+		}
 	}
 
 	public void delete(String memberId) {
 		refreshTokenRepository.deleteByMemberId(memberId);
+	}
+
+	private boolean isExistRefreshToken(String memberId) {
+		return refreshTokenRepository.existsByMemberId(memberId);
+	}
+
+	private RefreshToken findByMemberId(String memberId) {
+		return refreshTokenRepository.findByMemberId(memberId)
+			.orElseThrow(() -> new IllegalArgumentException("Unexpected refresh token"));
 	}
 }

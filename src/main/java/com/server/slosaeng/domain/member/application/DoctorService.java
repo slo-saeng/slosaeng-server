@@ -28,10 +28,11 @@ public class DoctorService {
 			.id(doctorRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(doctorRequestDto.getPassword()))
 			.name(doctorRequestDto.getName())
-			.role(Role.DOCTOR)
+			.role(Role.NOT_APPROVED)
 			.position(doctorRequestDto.getPosition())
 			.phone(doctorRequestDto.getPhone())
 			.birth(doctorRequestDto.getBirth())
+			.institutionNumber(doctorRequestDto.getInstitutionNumber())
 			.build()).getId();
 	}
 
@@ -44,6 +45,7 @@ public class DoctorService {
 			.position(doctor.getPosition())
 			.phone(doctor.getPhone())
 			.birth(doctor.getBirth())
+			.institutionNumber(doctor.getInstitutionNumber())
 			.build();
 	}
 
@@ -54,6 +56,7 @@ public class DoctorService {
 		doctor.updatePosition(doctorRequestDto.getPosition());
 		doctor.updatePhone(doctorRequestDto.getPhone());
 		doctor.updateBirth(doctorRequestDto.getBirth());
+		doctor.updateInstitutionNumber(doctorRequestDto.getInstitutionNumber());
 		doctorRepository.save(doctor);
 	}
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Role {
 
+	NOT_APPROVED("ROLE_NOT_APPROVED", "Not Approved"),
 	HELPER("ROLE_HELPER", "Helper"),
 	DOCTOR("ROLE_DOCTOR", "Doctor"),
 	MASTER("ROLE_MASTER", "Master"),

@@ -26,6 +26,9 @@ public class Doctor extends Member {
 	@Column(nullable = false)
 	private String birth;
 
+	@Column(nullable = false)
+	private Long institutionNumber;
+
 	public void updatePhone(String phone) {
 		this.phone = phone;
 	}
@@ -36,5 +39,9 @@ public class Doctor extends Member {
 
 	public void updateBirth(String birth) {
 		this.birth = birth;
+	}
+
+	public void updateInstitutionNumber(Long institutionNumber) {
+		this.institutionNumber = institutionNumber;
 	}
 }

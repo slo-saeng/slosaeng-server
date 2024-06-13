@@ -1,5 +1,7 @@
 package com.server.slosaeng.domain.member.application;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,17 @@ public class MemberService {
 			.name(addMemberRequestDto.getName())
 			.role(Role.HELPER)
 			.build()).getId();
+	}
+
+	public Member getCurrentMember() {
+		try {
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = (UserDetails)principal;
+			String username = ((UserDetails)principal).getUsername();
+			return findById(username);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("authenticated member not found. please login again.");
+		}
 	}
 
 	public Member findById(String id) {

@@ -39,6 +39,12 @@ public class DoctorService {
 			.build()).getId();
 	}
 
+	public void approve(String doctorId) {
+		Doctor doctor = findDoctorById(doctorId);
+		doctor.updateRole(Role.DOCTOR);
+		doctorRepository.save(doctor);
+	}
+
 	public DoctorResponseDto findById(String doctorId) {
 		Doctor doctor = findDoctorById(doctorId);
 		return DoctorResponseDto.builder()

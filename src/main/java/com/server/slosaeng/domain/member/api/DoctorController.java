@@ -36,6 +36,15 @@ public class DoctorController {
 		return ApiResponse.success(id, "Creating doctor succeed");
 	}
 
+	@PostMapping("/approve/{doctorId}")
+	@Operation(summary = "의료진 승인")
+	public ApiResponse<?> approveDoctor(
+		@PathVariable String doctorId
+	) {
+		doctorService.approve(doctorId);
+		return ApiResponse.success(true, "Approving doctor succeed");
+	}
+
 	@GetMapping("/{doctorId}")
 	@Operation(summary = "의료진 조회")
 	public ApiResponse<?> getDoctor(

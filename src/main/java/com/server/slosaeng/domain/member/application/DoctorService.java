@@ -1,5 +1,8 @@
 package com.server.slosaeng.domain.member.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +31,18 @@ public class DoctorService {
 			.id(doctorRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(doctorRequestDto.getPassword()))
 			.name(doctorRequestDto.getName())
-			.role(Role.DOCTOR)
+			.role(Role.NOT_APPROVED)
 			.position(doctorRequestDto.getPosition())
 			.phone(doctorRequestDto.getPhone())
 			.birth(doctorRequestDto.getBirth())
+			.institutionNumber(doctorRequestDto.getInstitutionNumber())
 			.build()).getId();
+	}
+
+	public void approve(String doctorId) {
+		Doctor doctor = findDoctorById(doctorId);
+		doctor.updateRole(Role.DOCTOR);
+		doctorRepository.save(doctor);
 	}
 
 	public DoctorResponseDto findById(String doctorId) {
@@ -44,7 +54,22 @@ public class DoctorService {
 			.position(doctor.getPosition())
 			.phone(doctor.getPhone())
 			.birth(doctor.getBirth())
+			.institutionNumber(doctor.getInstitutionNumber())
 			.build();
+	}
+
+	public List<DoctorResponseDto> findNotApprovedDoctors() {
+		return doctorRepository.findByRole(Role.NOT_APPROVED).stream()
+			.map(doctor -> DoctorResponseDto.builder()
+				.id(doctor.getId())
+				.name(doctor.getName())
+				.role(doctor.getRole())
+				.position(doctor.getPosition())
+				.phone(doctor.getPhone())
+				.birth(doctor.getBirth())
+				.institutionNumber(doctor.getInstitutionNumber())
+				.build())
+			.collect(Collectors.toList());
 	}
 
 	public void update(String doctorId, DoctorRequestDto doctorRequestDto) {
@@ -54,6 +79,7 @@ public class DoctorService {
 		doctor.updatePosition(doctorRequestDto.getPosition());
 		doctor.updatePhone(doctorRequestDto.getPhone());
 		doctor.updateBirth(doctorRequestDto.getBirth());
+		doctor.updateInstitutionNumber(doctorRequestDto.getInstitutionNumber());
 		doctorRepository.save(doctor);
 	}
 

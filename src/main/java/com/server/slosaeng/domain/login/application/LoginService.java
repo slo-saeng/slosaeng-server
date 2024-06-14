@@ -11,6 +11,7 @@ import com.server.slosaeng.domain.member.application.MemberService;
 import com.server.slosaeng.domain.member.domain.Member;
 import com.server.slosaeng.global.auth.jwt.TokenProvider;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -21,6 +22,7 @@ public class LoginService {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 
+	@Transactional
 	public LoginResponseDto login(LoginRequestDto loginRequestDto) {
 		String id = loginRequestDto.getId();
 		String password = loginRequestDto.getPassword();

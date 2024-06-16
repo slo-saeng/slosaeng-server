@@ -37,7 +37,7 @@ jobs:
           APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
         run: |
           echo "$KEY" | ssh-add -
-          ssh -o StrictHostKeyChecking=no -i $KEY $USER@$HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i $KEY $USERNAME@$HOST << 'EOF'
             pkill -f $JAR_NAME || true
             rm -f $JAR_NAME
           EOF

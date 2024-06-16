@@ -32,11 +32,10 @@ jobs:
         env:
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USERNAME }}
-          KEY: ${{ secrets.EC2_SSH_KEY }}
+          KEY: ${{ secrets.EC2_KEY }}
           JAR_NAME: myapp.jar
           APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
         run: |
-          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
           ssh -o StrictHostKeyChecking=no -i $KEY $USER@$HOST << 'EOF'
             pkill -f $JAR_NAME || true
             rm -f $JAR_NAME

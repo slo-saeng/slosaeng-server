@@ -42,7 +42,7 @@ jobs:
             rm -f $JAR_NAME
           EOF
 
-          scp -o StrictHostKeyChecking=no -i $KEY build/libs/*.jar $USER@$HOST:~/$JAR_NAME
+          scp -o StrictHostKeyChecking=no -i $KEY build/libs/*.jar $USERNAME@$HOST:~/$JAR_NAME
 
           ssh -o StrictHostKeyChecking=no -i $KEY $USERNAME@$HOST << 'EOF'
             echo "$APPLICATION_YML" > ~/application.yml

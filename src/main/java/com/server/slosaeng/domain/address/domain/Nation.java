@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Builder
+@AllArgsConstructor
 @Table(name = "nation")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Nation {
@@ -26,8 +28,4 @@ public class Nation {
 	@Column(nullable = false)
 	private String name;
 
-	public Nation(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
 }

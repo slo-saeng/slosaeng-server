@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Builder
+@AllArgsConstructor
 @Table(name = "city")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class City {
@@ -32,10 +34,4 @@ public class City {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "nation_id")
 	private Nation nation;
-
-	public City(Long id, String name, Nation nation) {
-		this.id = id;
-		this.name = name;
-		this.nation = nation;
-	}
 }

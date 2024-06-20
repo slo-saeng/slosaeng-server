@@ -41,10 +41,19 @@ public class DistrictService {
 			).collect(Collectors.toList());
 	}
 
+	public List<DistrictResponseDto> findAllByCity(Long cityId) {
+		return districtRepository.findAllByCityId(cityId).stream()
+			.map(district -> DistrictResponseDto.builder()
+				.id(district.getId())
+				.name(district.getName())
+				.build()
+			).collect(Collectors.toList());
+	}
+
 	public void delete(Long districtId) {
 		districtRepository.deleteById(districtId);
 	}
-	
+
 	protected District findById(Long districtId) {
 		return districtRepository.findById(districtId)
 			.orElseThrow(() -> new IllegalArgumentException("District not found"));

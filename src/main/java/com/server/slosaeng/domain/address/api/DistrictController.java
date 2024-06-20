@@ -42,6 +42,15 @@ public class DistrictController {
 		return ApiResponse.success(districts, "Reading Districts succeed");
 	}
 
+	@GetMapping("/{cityId}")
+	@Operation(summary = "도시 기반 군/구 리스트 조회")
+	public ApiResponse<?> getDistrictsByCity(
+		@PathVariable Long cityId
+	) {
+		List<DistrictResponseDto> districts = districtService.findAllByCity(cityId);
+		return ApiResponse.success(districts, "Reading Districts succeed");
+	}
+
 	@DeleteMapping("/{districtId}")
 	@Operation(summary = "지역 삭제")
 	public ApiResponse<?> deleteDistrict(

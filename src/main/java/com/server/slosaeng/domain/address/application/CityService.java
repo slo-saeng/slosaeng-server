@@ -50,7 +50,7 @@ public class CityService {
 		cityRepository.deleteById(cityId);
 	}
 
-	protected City findById(Long cityId) {
+	public City findById(Long cityId) {
 		return cityRepository.findById(cityId)
 			.orElseThrow(() -> new IllegalArgumentException("City not found"));
 	}

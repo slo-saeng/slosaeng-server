@@ -37,7 +37,7 @@ public class NationService {
 		nationRepository.deleteById(nationId);
 	}
 
-	protected Nation findById(Long nationId) {
+	public Nation findById(Long nationId) {
 		return nationRepository.findById(nationId)
 			.orElseThrow(() -> new IllegalArgumentException("Nation not found"));
 	}

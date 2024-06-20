@@ -54,7 +54,7 @@ public class DistrictService {
 		districtRepository.deleteById(districtId);
 	}
 
-	protected District findById(Long districtId) {
+	public District findById(Long districtId) {
 		return districtRepository.findById(districtId)
 			.orElseThrow(() -> new IllegalArgumentException("District not found"));
 	}

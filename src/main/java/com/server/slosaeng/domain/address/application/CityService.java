@@ -37,6 +37,15 @@ public class CityService {
 			).collect(Collectors.toList());
 	}
 
+	public List<CityResponseDto> findAllByNation(Long nationId) {
+		return cityRepository.findAllByNationId(nationId).stream()
+			.map(city -> CityResponseDto.builder()
+				.id(city.getId())
+				.name(city.getName())
+				.build()
+			).collect(Collectors.toList());
+	}
+
 	public void delete(Long cityId) {
 		cityRepository.deleteById(cityId);
 	}

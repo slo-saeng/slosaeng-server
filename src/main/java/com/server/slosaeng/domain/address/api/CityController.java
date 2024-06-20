@@ -42,6 +42,15 @@ public class CityController {
 		return ApiResponse.success(cities, "Reading cities succeed");
 	}
 
+	@GetMapping("/{nationId}")
+	@Operation(summary = "지역 기반 도시 리스트 조회")
+	public ApiResponse<?> getCitiesByNation(
+		@PathVariable Long nationId
+	) {
+		List<CityResponseDto> cities = cityService.findAllByNation(nationId);
+		return ApiResponse.success(cities, "Reading cities succeed");
+	}
+
 	@DeleteMapping("/{cityId}")
 	@Operation(summary = "지역 삭제")
 	public ApiResponse<?> deleteCity(

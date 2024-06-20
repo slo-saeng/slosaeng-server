@@ -4,7 +4,6 @@ import com.server.slosaeng.domain.address.domain.City;
 import com.server.slosaeng.domain.address.domain.District;
 import com.server.slosaeng.domain.address.domain.Nation;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,15 +48,15 @@ public class Elder {
 	@Enumerated(EnumType.STRING)
 	private BloodType bloodType;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "nation_id")
 	private Nation nation;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "district_id")
 	private District district;
 

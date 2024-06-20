@@ -29,7 +29,7 @@ public class ElderRequestDto {
 	private Gender gender;
 
 	@NotNull
-	@Schema(description = "혈액형", example = "RH+A")
+	@Schema(description = "혈액형", example = "RH_PLUS_A")
 	private BloodType bloodType;
 
 	@NotNull

@@ -46,8 +46,7 @@ public class WebSecurityConfig {
 			CorsConfiguration config = new CorsConfiguration();
 			config.setAllowedHeaders(Collections.singletonList("*"));
 			config.setAllowedMethods(Collections.singletonList("*"));
-			config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:9999"));
-			config.setAllowedOriginPatterns(Collections.singletonList("http://15.164.96.227:9999"));
+			config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:3000"));
 			config.setAllowCredentials(true);
 			return config;
 		};

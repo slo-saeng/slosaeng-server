@@ -1,5 +1,7 @@
 package com.server.slosaeng.global.config;
 
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.server.slosaeng.global.auth.application.MemberDetailService;
 import com.server.slosaeng.global.auth.filter.TokenAuthenticationFilter;
@@ -37,9 +41,22 @@ public class WebSecurityConfig {
 			);
 	}
 
+	CorsConfigurationSource corsConfigurationSource() {
+		return request -> {
+			CorsConfiguration config = new CorsConfiguration();
+			config.setAllowedHeaders(Collections.singletonList("*"));
+			config.setAllowedMethods(Collections.singletonList("*"));
+			config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:9999"));
+			config.setAllowedOriginPatterns(Collections.singletonList("http://15.164.96.227:9999"));
+			config.setAllowCredentials(true);
+			return config;
+		};
+	}
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
+			.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)

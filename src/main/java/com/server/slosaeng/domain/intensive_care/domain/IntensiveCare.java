@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @AllArgsConstructor
-@Table(name = "intensice_care")
+@Table(name = "intensive_care")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class IntensiveCare {
 

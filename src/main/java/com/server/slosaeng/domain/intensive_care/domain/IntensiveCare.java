@@ -2,7 +2,6 @@ package com.server.slosaeng.domain.intensive_care.domain;
 
 import com.server.slosaeng.domain.elder.domain.Elder;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,8 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -38,8 +36,7 @@ public class IntensiveCare {
 	@Enumerated(EnumType.STRING)
 	private Grade grade;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "elder_id")
+	@OneToOne
 	private Elder elder;
 
 	public void updateInfo(String info) {

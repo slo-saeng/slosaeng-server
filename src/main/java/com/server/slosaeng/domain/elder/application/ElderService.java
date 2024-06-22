@@ -25,7 +25,10 @@ public class ElderService {
 
 	public Long save(ElderRequestDto elderRequestDto) {
 		Nation nation = nationService.findById(elderRequestDto.getNationId());
-		City city = cityService.findById(elderRequestDto.getCityId());
+		City city = null;
+		if (elderRequestDto.getCityId() != null) {
+			city = cityService.findById(elderRequestDto.getCityId());
+		}
 		District district = districtService.findById(elderRequestDto.getDistrictId());
 
 		return elderRepository.save(Elder.builder()
@@ -82,7 +85,7 @@ public class ElderService {
 		elderRepository.deleteById(elderId);
 	}
 
-	private Elder findById(Long elderId) {
+	public Elder findById(Long elderId) {
 		return elderRepository.findById(elderId)
 			.orElseThrow(() -> new IllegalArgumentException("Elder not found"));
 	}

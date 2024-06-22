@@ -42,12 +42,21 @@ public class DistrictController {
 		return ApiResponse.success(districts, "Reading Districts succeed");
 	}
 
-	@GetMapping("/{cityId}")
+	@GetMapping("/city/{cityId}")
 	@Operation(summary = "도시 기반 군/구 리스트 조회")
 	public ApiResponse<?> getDistrictsByCity(
 		@PathVariable Long cityId
 	) {
 		List<DistrictResponseDto> districts = districtService.findAllByCity(cityId);
+		return ApiResponse.success(districts, "Reading Districts succeed");
+	}
+
+	@GetMapping("/nation/{nationId}")
+	@Operation(summary = "지역 기반 군/구 리스트 조회")
+	public ApiResponse<?> getDistrictsByNation(
+		@PathVariable Long nationId
+	) {
+		List<DistrictResponseDto> districts = districtService.findAllByNation(nationId);
 		return ApiResponse.success(districts, "Reading Districts succeed");
 	}
 

@@ -10,4 +10,6 @@ import com.server.slosaeng.domain.address.domain.District;
 @Repository
 public interface DistrictRepository extends JpaRepository<District, Long> {
 	List<District> findAllByCityId(Long cityId);
+
+	List<District> findAllByNationId(Long nationId);
 }

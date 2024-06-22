@@ -23,7 +23,10 @@ public class DistrictService {
 
 	public Long save(DistrictRequestDto districtRequestDto) {
 		Nation nation = nationService.findById(districtRequestDto.getNationId());
-		City city = cityService.findById(districtRequestDto.getCityId());
+		City city = null;
+		if (districtRequestDto.getCityId() != null) {
+			city = cityService.findById(districtRequestDto.getCityId());
+		}
 		return districtRepository.save(District.builder()
 			.nation(nation)
 			.city(city)
@@ -43,6 +46,15 @@ public class DistrictService {
 
 	public List<DistrictResponseDto> findAllByCity(Long cityId) {
 		return districtRepository.findAllByCityId(cityId).stream()
+			.map(district -> DistrictResponseDto.builder()
+				.id(district.getId())
+				.name(district.getName())
+				.build()
+			).collect(Collectors.toList());
+	}
+
+	public List<DistrictResponseDto> findAllByNation(Long nationId) {
+		return districtRepository.findAllByNationId(nationId).stream()
 			.map(district -> DistrictResponseDto.builder()
 				.id(district.getId())
 				.name(district.getName())

@@ -36,7 +36,6 @@ public class ElderRequestDto {
 	@Schema(description = "지역 아이디", example = "1")
 	private Long nationId;
 
-	@NotNull
 	@Schema(description = "도시 아이디", example = "1")
 	private Long cityId;
 

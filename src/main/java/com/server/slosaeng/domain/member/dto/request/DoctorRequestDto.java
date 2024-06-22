@@ -35,5 +35,5 @@ public class DoctorRequestDto {
 
 	@NotNull
 	@Schema(description = "요양기관번호", example = "1140292")
-	private String institutionNumber;
+	private Long institutionNumber;
 }

@@ -53,6 +53,15 @@ public class DistrictService {
 			).collect(Collectors.toList());
 	}
 
+	public List<DistrictResponseDto> findAllByNation(Long nationId) {
+		return districtRepository.findAllByNationId(nationId).stream()
+			.map(district -> DistrictResponseDto.builder()
+				.id(district.getId())
+				.name(district.getName())
+				.build()
+			).collect(Collectors.toList());
+	}
+
 	public void delete(Long districtId) {
 		districtRepository.deleteById(districtId);
 	}

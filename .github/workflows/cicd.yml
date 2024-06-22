@@ -2,48 +2,24 @@ name: Deploy to EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
-jobs:
-  deploy:
+jobs: 
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '17'
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew clean build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifact
-          path: build/libs/*.jar
 
-      - name: Deploy to EC2
-        env:
-          HOST: ${{ secrets.EC2_HOST }}
-          USER: ${{ secrets.EC2_USERNAME }}
-          KEY: ${{ secrets.EC2_KEY }}
-          JAR_NAME: myapp.jar
-          APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
-        run: |
-          ssh -o StrictHostKeyChecking=no -i <(echo "$KEY") $USER@$HOST << 'EOF'
-            pkill -f $JAR_NAME || true
-            rm -f $JAR_NAME
-          EOF
-
-          scp -o StrictHostKeyChecking=no -i <(echo "$KEY") build/libs/*.jar $USER@$HOST:~/$JAR_NAME
-
-          ssh -o StrictHostKeyChecking=no -i <(echo "$KEY") $USER@$HOST << 'EOF'
-            echo "$APPLICATION_YML" > ~/application.yml
-            nohup java -jar ~/$JAR_NAME --spring.config.location=~/application.yml > app.log 2>&1 &
-          EOF

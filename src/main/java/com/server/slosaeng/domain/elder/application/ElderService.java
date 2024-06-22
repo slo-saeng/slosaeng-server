@@ -85,7 +85,7 @@ public class ElderService {
 		elderRepository.deleteById(elderId);
 	}
 
-	private Elder findById(Long elderId) {
+	public Elder findById(Long elderId) {
 		return elderRepository.findById(elderId)
 			.orElseThrow(() -> new IllegalArgumentException("Elder not found"));
 	}

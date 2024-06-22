@@ -1,5 +1,6 @@
 package com.server.slosaeng.domain.member.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -27,7 +28,7 @@ public class Helper extends Member {
 	private String idNumber;
 
 	@ElementCollection
-	private List<Long> elderIds;
+	private List<Long> elderIds = new ArrayList<>();
 
 	public void updatePhone(String phone) {
 		this.phone = phone;
@@ -37,7 +38,7 @@ public class Helper extends Member {
 		this.idNumber = idNumber;
 	}
 
-	public void updateElderIds(List<Long> elderIds) {
-		this.elderIds = elderIds;
+	public void addElderId(Long elderId) {
+		elderIds.add(elderId);
 	}
 }

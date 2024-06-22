@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class HelperService {
-
+	private final MemberService memberService;
 	private final RefreshTokenService refreshTokenService;
 	private final HelperRepository helperRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -54,6 +54,12 @@ public class HelperService {
 		helper.updateName(helperUpdateDto.getName());
 		helper.updatePhone(helperUpdateDto.getPhone());
 		helper.updateIdNumber(helperUpdateDto.getIdNumber());
+		helperRepository.save(helper);
+	}
+
+	public void addElderId(Long elderId) {
+		Helper helper = (Helper)memberService.getCurrentMember();
+		helper.addElderId(elderId);
 		helperRepository.save(helper);
 	}
 

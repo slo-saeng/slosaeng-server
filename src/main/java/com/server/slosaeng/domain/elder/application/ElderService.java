@@ -12,12 +12,14 @@ import com.server.slosaeng.domain.elder.dao.ElderRepository;
 import com.server.slosaeng.domain.elder.domain.Elder;
 import com.server.slosaeng.domain.elder.dto.request.ElderRequestDto;
 import com.server.slosaeng.domain.elder.dto.response.ElderResponseDto;
+import com.server.slosaeng.domain.member.application.HelperService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class ElderService {
+	private final HelperService helperService;
 	private final NationService nationService;
 	private final CityService cityService;
 	private final DistrictService districtService;
@@ -31,7 +33,7 @@ public class ElderService {
 		}
 		District district = districtService.findById(elderRequestDto.getDistrictId());
 
-		return elderRepository.save(Elder.builder()
+		Long id = elderRepository.save(Elder.builder()
 			.name(elderRequestDto.getName())
 			.idNumber(elderRequestDto.getIdNumber())
 			.phone(elderRequestDto.getPhone())
@@ -43,6 +45,8 @@ public class ElderService {
 			.detailAddress(elderRequestDto.getDetailAddress())
 			.etc(elderRequestDto.getEtc())
 			.build()).getId();
+		helperService.addElderId(id);
+		return id;
 	}
 
 	public ElderResponseDto getElderById(Long elderId) {

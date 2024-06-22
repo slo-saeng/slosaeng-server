@@ -16,5 +16,5 @@ public class DoctorResponseDto {
 	private String phone;
 	private String position;
 	private String birth;
-	private Long institutionNumber;
+	private String institutionNumber;
 }

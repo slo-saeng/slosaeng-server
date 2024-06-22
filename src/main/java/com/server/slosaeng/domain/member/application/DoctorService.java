@@ -72,6 +72,20 @@ public class DoctorService {
 			.collect(Collectors.toList());
 	}
 
+	public List<DoctorResponseDto> findByInstitutionNumber(String institutionNumber) {
+		return doctorRepository.findAllByInstitutionNumber(institutionNumber).stream()
+			.map(doctor -> DoctorResponseDto.builder()
+				.id(doctor.getId())
+				.name(doctor.getName())
+				.role(doctor.getRole())
+				.position(doctor.getPosition())
+				.phone(doctor.getPhone())
+				.birth(doctor.getBirth())
+				.institutionNumber(doctor.getInstitutionNumber())
+				.build())
+			.collect(Collectors.toList());
+	}
+
 	public void update(String doctorId, DoctorRequestDto doctorRequestDto) {
 		Doctor doctor = findDoctorById(doctorId);
 		doctor.updatePassword(bCryptPasswordEncoder.encode(doctorRequestDto.getPassword()));

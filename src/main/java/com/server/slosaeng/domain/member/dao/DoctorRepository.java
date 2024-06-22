@@ -11,4 +11,6 @@ import com.server.slosaeng.domain.member.domain.Role;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, String> {
 	List<Doctor> findByRole(Role role);
+
+	List<Doctor> findAllByInstitutionNumber(String institutionNumber);
 }

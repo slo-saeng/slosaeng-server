@@ -60,6 +60,15 @@ public class DoctorController {
 		return ApiResponse.success(notApprovedDoctors, "Reading not approved doctors succeed");
 	}
 
+	@GetMapping("/institution/{institutionNumber}")
+	@Operation(summary = "요양기관 의료진 조회")
+	public ApiResponse<?> getDoctorsByInstitution(
+		@PathVariable String institutionNumber
+	) {
+		List<DoctorResponseDto> doctors = doctorService.findByInstitutionNumber(institutionNumber);
+		return ApiResponse.success(doctors, "Reading doctors by institution succeed");
+	}
+
 	@PatchMapping("/{doctorId}")
 	@Operation(summary = "의료진 정보 수정")
 	public ApiResponse<?> updateDoctor(

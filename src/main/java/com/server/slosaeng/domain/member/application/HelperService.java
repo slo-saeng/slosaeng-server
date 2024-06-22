@@ -3,6 +3,7 @@ package com.server.slosaeng.domain.member.application;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.server.slosaeng.domain.elder.domain.Elder;
 import com.server.slosaeng.domain.login.application.RefreshTokenService;
 import com.server.slosaeng.domain.member.dao.HelperRepository;
 import com.server.slosaeng.domain.member.domain.Helper;
@@ -44,7 +45,7 @@ public class HelperService {
 			.role(helper.getRole())
 			.phone(helper.getPhone())
 			.idNumber(helper.getIdNumber())
-			.elderIds(helper.getElderIds())
+			.elders(helper.getElders())
 			.build();
 	}
 
@@ -57,9 +58,10 @@ public class HelperService {
 		helperRepository.save(helper);
 	}
 
-	public void addElderId(Long elderId) {
+	@Transactional
+	public void addElderId(Elder elder) {
 		Helper helper = (Helper)memberService.getCurrentMember();
-		helper.addElderId(elderId);
+		helper.addElder(elder);
 		helperRepository.save(helper);
 	}
 

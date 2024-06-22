@@ -1,5 +1,7 @@
 package com.server.slosaeng.domain.elder.api;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -41,6 +43,13 @@ public class ElderController {
 	) {
 		ElderResponseDto elder = elderService.getElderById(elderId);
 		return ApiResponse.success(elder, "Reading Elder succeed");
+	}
+
+	@GetMapping("")
+	@Operation(summary = "고령자 목록 조회")
+	public ApiResponse<?> getElders() {
+		List<ElderResponseDto> elders = elderService.getAllElders();
+		return ApiResponse.success(elders, "Reading Elders succeed");
 	}
 
 	@PatchMapping("/{elderId}")

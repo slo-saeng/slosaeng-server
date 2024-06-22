@@ -1,5 +1,8 @@
 package com.server.slosaeng.domain.elder.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.address.application.CityService;
@@ -33,7 +36,7 @@ public class ElderService {
 		}
 		District district = districtService.findById(elderRequestDto.getDistrictId());
 
-		Long id = elderRepository.save(Elder.builder()
+		Elder elder = Elder.builder()
 			.name(elderRequestDto.getName())
 			.idNumber(elderRequestDto.getIdNumber())
 			.phone(elderRequestDto.getPhone())
@@ -44,8 +47,10 @@ public class ElderService {
 			.district(district)
 			.detailAddress(elderRequestDto.getDetailAddress())
 			.etc(elderRequestDto.getEtc())
-			.build()).getId();
-		helperService.addElderId(id);
+			.build();
+
+		Long id = elderRepository.save(elder).getId();
+		helperService.addElderId(elder);
 		return id;
 	}
 
@@ -64,6 +69,25 @@ public class ElderService {
 			.detailAddress(elder.getDetailAddress())
 			.etc(elder.getEtc())
 			.build();
+	}
+
+	public List<ElderResponseDto> getAllElders() {
+		return elderRepository.findAll().stream()
+			.map(elder -> ElderResponseDto.builder()
+				.id(elder.getId())
+				.name(elder.getName())
+				.idNumber(elder.getIdNumber())
+				.phone(elder.getPhone())
+				.gender(elder.getGender())
+				.bloodType(elder.getBloodType())
+				.nation(elder.getNation())
+				.city(elder.getCity())
+				.district(elder.getDistrict())
+				.detailAddress(elder.getDetailAddress())
+				.etc(elder.getEtc())
+				.build()
+			).collect(Collectors.toList());
+
 	}
 
 	public void update(Long elderId, ElderRequestDto elderRequestDto) {

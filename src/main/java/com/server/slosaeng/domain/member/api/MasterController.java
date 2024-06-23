@@ -1,5 +1,7 @@
 package com.server.slosaeng.domain.member.api;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.server.slosaeng.domain.member.application.MasterService;
 import com.server.slosaeng.domain.member.dto.request.MasterRequestDto;
 import com.server.slosaeng.domain.member.dto.request.MasterUpdateDto;
+import com.server.slosaeng.domain.member.dto.response.MasterResponseDto;
 import com.server.slosaeng.global.common.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +43,13 @@ public class MasterController {
 		@PathVariable String masterId
 	) {
 		return ApiResponse.success(masterService.findById(masterId), "Reading master succeed");
+	}
+
+	@GetMapping("")
+	@Operation(summary = "마스터 목록 조회")
+	public ApiResponse<?> getMasters() {
+		List<MasterResponseDto> masters = masterService.findAll();
+		return ApiResponse.success(masters, "Reading masters succeed");
 	}
 
 	@PatchMapping("/{masterId}")

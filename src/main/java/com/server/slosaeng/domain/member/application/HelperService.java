@@ -1,5 +1,10 @@
 package com.server.slosaeng.domain.member.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +54,31 @@ public class HelperService {
 			.build();
 	}
 
+	public List<HelperResponseDto> findAll() {
+		return helperRepository.findAll().stream()
+			.map(helper -> HelperResponseDto.builder()
+				.id(helper.getId())
+				.name(helper.getName())
+				.role(helper.getRole())
+				.phone(helper.getPhone())
+				.idNumber(helper.getIdNumber())
+				.elders(helper.getElders())
+				.build())
+			.collect(Collectors.toList());
+	}
+
+	public Page<HelperResponseDto> findAllByPage(Pageable pageable) {
+		return helperRepository.findAll(pageable)
+			.map(helper -> HelperResponseDto.builder()
+				.id(helper.getId())
+				.name(helper.getName())
+				.role(helper.getRole())
+				.phone(helper.getPhone())
+				.idNumber(helper.getIdNumber())
+				.elders(helper.getElders())
+				.build());
+	}
+
 	public void update(String helperId, HelperUpdateDto helperUpdateDto) {
 		Helper helper = findHelperById(helperId);
 		helper.updatePassword(bCryptPasswordEncoder.encode(helperUpdateDto.getPassword()));
@@ -62,6 +92,13 @@ public class HelperService {
 	public void addElderId(Elder elder) {
 		Helper helper = (Helper)memberService.getCurrentMember();
 		helper.addElder(elder);
+		helperRepository.save(helper);
+	}
+
+	@Transactional
+	public void removeElderId(Elder elder) {
+		Helper helper = (Helper)memberService.getCurrentMember();
+		helper.removeElder(elder);
 		helperRepository.save(helper);
 	}
 

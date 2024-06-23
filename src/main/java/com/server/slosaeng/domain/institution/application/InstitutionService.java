@@ -24,7 +24,8 @@ public class InstitutionService {
 
 	@Transactional
 	public void initInstitutionData() throws Exception {
-		String filePath = "src/main/resources/static/institution.xlsx";
+		String filePath = "/home/ubuntu/slosaeng/institution.xlsx";
+		// String filePath = "src/main/resources/static/institution.xlsx";
 		File file = new File(filePath);
 		ExcelSheetHandler excelSheetHandler = ExcelSheetHandler.readExcel(file);
 		List<List<String>> excelDatas = excelSheetHandler.getRows();

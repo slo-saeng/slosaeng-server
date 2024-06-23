@@ -1,5 +1,8 @@
 package com.server.slosaeng.domain.member.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +45,17 @@ public class MasterService {
 			.role(master.getRole())
 			.institutionNumber(master.getInstitutionNumber())
 			.build();
+	}
+
+	public List<MasterResponseDto> findAll() {
+		return masterRepository.findAll().stream()
+			.map(master -> MasterResponseDto.builder()
+				.id(master.getId())
+				.name(master.getName())
+				.role(master.getRole())
+				.institutionNumber(master.getInstitutionNumber())
+				.build())
+			.collect(Collectors.toList());
 	}
 
 	public void update(String masterId, MasterUpdateDto masterUpdateDto) {

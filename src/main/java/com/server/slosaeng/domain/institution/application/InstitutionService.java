@@ -3,11 +3,13 @@ package com.server.slosaeng.domain.institution.application;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.institution.dao.InstitutionRepository;
 import com.server.slosaeng.domain.institution.domain.Institution;
+import com.server.slosaeng.domain.institution.dto.response.InstitutionResponseDto;
 import com.server.slosaeng.global.handler.ExcelSheetHandler;
 
 import jakarta.transaction.Transactional;
@@ -20,18 +22,7 @@ public class InstitutionService {
 
 	@Transactional
 	public void initInstitutionData() throws Exception {
-		String[] filePaths = {
-			"src/main/resources/static/institution1.xlsx",
-			"src/main/resources/static/institution2.xlsx",
-			"src/main/resources/static/institution3.xlsx"
-		};
-
-		for (String filePath : filePaths) {
-			processExcelFile(filePath);
-		}
-	}
-
-	private void processExcelFile(String filePath) throws Exception {
+		String filePath = "src/main/resources/static/institution.xlsx";
 		File file = new File(filePath);
 		ExcelSheetHandler excelSheetHandler = ExcelSheetHandler.readExcel(file);
 		List<List<String>> excelDatas = excelSheetHandler.getRows();
@@ -52,10 +43,21 @@ public class InstitutionService {
 				batchList.clear();
 			}
 		}
-
+		
 		if (!batchList.isEmpty()) {
 			institutionRepository.saveAll(batchList);
 		}
+	}
+
+	public List<InstitutionResponseDto> searchInstitution(String keyword) {
+		return institutionRepository.findByNameContaining(keyword).stream()
+			.map(Institution -> InstitutionResponseDto.builder()
+				.id(Institution.getId())
+				.code(Institution.getCode())
+				.name(Institution.getName())
+				.type(Institution.getType())
+				.build()
+			).collect(Collectors.toList());
 	}
 
 }

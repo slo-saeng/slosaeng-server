@@ -19,6 +19,7 @@ import com.server.slosaeng.domain.elder.dto.request.ElderRequestDto;
 import com.server.slosaeng.domain.elder.dto.response.ElderResponseDto;
 import com.server.slosaeng.domain.member.application.HelperService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,6 +31,7 @@ public class ElderService {
 	private final DistrictService districtService;
 	private final ElderRepository elderRepository;
 
+	@Transactional
 	public Long save(ElderRequestDto elderRequestDto) {
 		Nation nation = nationService.findById(elderRequestDto.getNationId());
 		City city = null;
@@ -51,8 +53,9 @@ public class ElderService {
 			.etc(elderRequestDto.getEtc())
 			.build();
 
+		Long id = elderRepository.save(elder).getId();
 		helperService.addElderId(elder);
-		return elderRepository.save(elder).getId();
+		return id;
 	}
 
 	public ElderResponseDto getElderById(Long elderId) {

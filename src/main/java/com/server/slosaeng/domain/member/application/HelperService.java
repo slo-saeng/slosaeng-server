@@ -66,6 +66,13 @@ public class HelperService {
 	}
 
 	@Transactional
+	public void removeElderId(Elder elder) {
+		Helper helper = (Helper)memberService.getCurrentMember();
+		helper.removeElder(elder);
+		helperRepository.save(helper);
+	}
+
+	@Transactional
 	public void delete(String helperId) {
 		refreshTokenService.delete(helperId);
 		helperRepository.deleteById(helperId);

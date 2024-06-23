@@ -44,4 +44,8 @@ public class Helper extends Member {
 		elders.add(elder);
 	}
 
+	public void removeElder(Elder elder) {
+		elders.remove(elder);
+	}
+
 }

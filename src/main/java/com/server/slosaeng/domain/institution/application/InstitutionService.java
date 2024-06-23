@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.institution.dao.InstitutionRepository;
@@ -43,7 +45,7 @@ public class InstitutionService {
 				batchList.clear();
 			}
 		}
-		
+
 		if (!batchList.isEmpty()) {
 			institutionRepository.saveAll(batchList);
 		}
@@ -58,6 +60,28 @@ public class InstitutionService {
 				.type(Institution.getType())
 				.build()
 			).collect(Collectors.toList());
+	}
+
+	public List<InstitutionResponseDto> getAllInstitutions() {
+		return institutionRepository.findAll().stream()
+			.map(Institution -> InstitutionResponseDto.builder()
+				.id(Institution.getId())
+				.code(Institution.getCode())
+				.name(Institution.getName())
+				.type(Institution.getType())
+				.build()
+			).collect(Collectors.toList());
+	}
+
+	public Page<InstitutionResponseDto> getAllInstitutionByPage(Pageable pageable) {
+		return institutionRepository.findAll(pageable)
+			.map(Institution -> InstitutionResponseDto.builder()
+				.id(Institution.getId())
+				.code(Institution.getCode())
+				.name(Institution.getName())
+				.type(Institution.getType())
+				.build()
+			);
 	}
 
 }

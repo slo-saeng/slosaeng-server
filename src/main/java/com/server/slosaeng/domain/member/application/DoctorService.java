@@ -3,6 +3,8 @@ package com.server.slosaeng.domain.member.application;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,33 @@ public class DoctorService {
 			.birth(doctor.getBirth())
 			.institutionNumber(doctor.getInstitutionNumber())
 			.build();
+	}
+
+	public List<DoctorResponseDto> findAll() {
+		return doctorRepository.findAll().stream()
+			.map(doctor -> DoctorResponseDto.builder()
+				.id(doctor.getId())
+				.name(doctor.getName())
+				.role(doctor.getRole())
+				.position(doctor.getPosition())
+				.phone(doctor.getPhone())
+				.birth(doctor.getBirth())
+				.institutionNumber(doctor.getInstitutionNumber())
+				.build())
+			.collect(Collectors.toList());
+	}
+
+	public Page<DoctorResponseDto> findAllByPage(Pageable pageable) {
+		return doctorRepository.findAll(pageable)
+			.map(doctor -> DoctorResponseDto.builder()
+				.id(doctor.getId())
+				.name(doctor.getName())
+				.role(doctor.getRole())
+				.position(doctor.getPosition())
+				.phone(doctor.getPhone())
+				.birth(doctor.getBirth())
+				.institutionNumber(doctor.getInstitutionNumber())
+				.build());
 	}
 
 	public List<DoctorResponseDto> findNotApprovedDoctors() {

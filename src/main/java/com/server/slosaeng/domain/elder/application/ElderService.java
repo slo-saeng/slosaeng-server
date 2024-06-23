@@ -3,6 +3,8 @@ package com.server.slosaeng.domain.elder.application;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.address.application.CityService;
@@ -49,9 +51,8 @@ public class ElderService {
 			.etc(elderRequestDto.getEtc())
 			.build();
 
-		Long id = elderRepository.save(elder).getId();
 		helperService.addElderId(elder);
-		return id;
+		return elderRepository.save(elder).getId();
 	}
 
 	public ElderResponseDto getElderById(Long elderId) {
@@ -90,6 +91,24 @@ public class ElderService {
 
 	}
 
+	public Page<ElderResponseDto> getEldersByPage(Pageable pageable) {
+		return elderRepository.findAll(pageable)
+			.map(elder -> ElderResponseDto.builder()
+				.id(elder.getId())
+				.name(elder.getName())
+				.idNumber(elder.getIdNumber())
+				.phone(elder.getPhone())
+				.gender(elder.getGender())
+				.bloodType(elder.getBloodType())
+				.nation(elder.getNation())
+				.city(elder.getCity())
+				.district(elder.getDistrict())
+				.detailAddress(elder.getDetailAddress())
+				.etc(elder.getEtc())
+				.build()
+			);
+	}
+
 	public void update(Long elderId, ElderRequestDto elderRequestDto) {
 		Nation nation = nationService.findById(elderRequestDto.getNationId());
 		City city = cityService.findById(elderRequestDto.getCityId());
@@ -110,6 +129,7 @@ public class ElderService {
 	}
 
 	public void delete(Long elderId) {
+		helperService.removeElderId(findById(elderId));
 		elderRepository.deleteById(elderId);
 	}
 

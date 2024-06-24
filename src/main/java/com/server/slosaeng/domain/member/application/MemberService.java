@@ -27,7 +27,7 @@ public class MemberService {
 			.id(addMemberRequestDto.getId())
 			.password(bCryptPasswordEncoder.encode(addMemberRequestDto.getPassword()))
 			.name(addMemberRequestDto.getName())
-			.role(Role.HELPER)
+			.role(Role.SUPER)
 			.build()).getId();
 	}
 

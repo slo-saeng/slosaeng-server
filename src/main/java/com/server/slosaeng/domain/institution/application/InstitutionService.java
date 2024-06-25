@@ -24,8 +24,8 @@ public class InstitutionService {
 
 	@Transactional
 	public void initInstitutionData() throws Exception {
-		String filePath = "/home/ubuntu/slosaeng/institution.xlsx";
-		// String filePath = "src/main/resources/static/institution.xlsx";
+		String filePath = "/home/ubuntu/slosaeng/institution_detail.xlsx";
+		// String filePath = "src/main/resources/static/institution_detail.xlsx";
 		File file = new File(filePath);
 		ExcelSheetHandler excelSheetHandler = ExcelSheetHandler.readExcel(file);
 		List<List<String>> excelDatas = excelSheetHandler.getRows();
@@ -38,6 +38,9 @@ public class InstitutionService {
 				.code(dataRow.get(0))
 				.name(dataRow.get(1))
 				.type(dataRow.get(2))
+				.address(dataRow.get(3))
+				.tel(dataRow.get(4))
+				.homepage(dataRow.get(5))
 				.build();
 			batchList.add(institution);
 
@@ -59,6 +62,9 @@ public class InstitutionService {
 				.code(Institution.getCode())
 				.name(Institution.getName())
 				.type(Institution.getType())
+				.address(Institution.getAddress())
+				.tel(Institution.getTel())
+				.homepage(Institution.getHomepage())
 				.build()
 			).collect(Collectors.toList());
 	}
@@ -70,6 +76,9 @@ public class InstitutionService {
 				.code(Institution.getCode())
 				.name(Institution.getName())
 				.type(Institution.getType())
+				.address(Institution.getAddress())
+				.tel(Institution.getTel())
+				.homepage(Institution.getHomepage())
 				.build()
 			).collect(Collectors.toList());
 	}
@@ -81,6 +90,9 @@ public class InstitutionService {
 				.code(Institution.getCode())
 				.name(Institution.getName())
 				.type(Institution.getType())
+				.address(Institution.getAddress())
+				.tel(Institution.getTel())
+				.homepage(Institution.getHomepage())
 				.build()
 			);
 	}

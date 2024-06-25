@@ -34,4 +34,13 @@ public class Institution {
 	@Column(nullable = false)
 	private String type;
 
+	@Column(nullable = false)
+	private String address;
+
+	@Column(nullable = false)
+	private String tel;
+
+	@Column(nullable = false)
+	private String homepage;
+
 }

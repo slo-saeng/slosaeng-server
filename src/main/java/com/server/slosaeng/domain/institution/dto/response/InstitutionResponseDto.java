@@ -12,4 +12,7 @@ public class InstitutionResponseDto {
 	private String code;
 	private String name;
 	private String type;
+	private String address;
+	private String tel;
+	private String homepage;
 }

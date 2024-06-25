@@ -3,6 +3,8 @@ package com.server.slosaeng.domain.emergency.application;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.elder.application.ElderService;
@@ -47,6 +49,15 @@ public class EmergencyService {
 				.elder(emergency.getElder())
 				.build())
 			.collect(Collectors.toList());
+	}
+
+	public Page<EmergencyResponseDto> findAllEmergencyByPage(Pageable pageable) {
+		return emergencyRepository.findAll(pageable)
+			.map(emergency -> EmergencyResponseDto.builder()
+				.id(emergency.getId())
+				.info(emergency.getInfo())
+				.elder(emergency.getElder())
+				.build());
 	}
 
 	public void updateEmergency(Long id, EmergencyUpdateDto emergencyUpdateDto) {

@@ -1,8 +1,14 @@
 package com.server.slosaeng.domain.member.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.server.slosaeng.domain.elder.domain.Elder;
 import com.server.slosaeng.domain.login.application.RefreshTokenService;
 import com.server.slosaeng.domain.member.dao.HelperRepository;
 import com.server.slosaeng.domain.member.domain.Helper;
@@ -17,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class HelperService {
-
+	private final MemberService memberService;
 	private final RefreshTokenService refreshTokenService;
 	private final HelperRepository helperRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -44,8 +50,33 @@ public class HelperService {
 			.role(helper.getRole())
 			.phone(helper.getPhone())
 			.idNumber(helper.getIdNumber())
-			.elderIds(helper.getElderIds())
+			.elders(helper.getElders())
 			.build();
+	}
+
+	public List<HelperResponseDto> findAll() {
+		return helperRepository.findAll().stream()
+			.map(helper -> HelperResponseDto.builder()
+				.id(helper.getId())
+				.name(helper.getName())
+				.role(helper.getRole())
+				.phone(helper.getPhone())
+				.idNumber(helper.getIdNumber())
+				.elders(helper.getElders())
+				.build())
+			.collect(Collectors.toList());
+	}
+
+	public Page<HelperResponseDto> findAllByPage(Pageable pageable) {
+		return helperRepository.findAll(pageable)
+			.map(helper -> HelperResponseDto.builder()
+				.id(helper.getId())
+				.name(helper.getName())
+				.role(helper.getRole())
+				.phone(helper.getPhone())
+				.idNumber(helper.getIdNumber())
+				.elders(helper.getElders())
+				.build());
 	}
 
 	public void update(String helperId, HelperUpdateDto helperUpdateDto) {
@@ -54,6 +85,20 @@ public class HelperService {
 		helper.updateName(helperUpdateDto.getName());
 		helper.updatePhone(helperUpdateDto.getPhone());
 		helper.updateIdNumber(helperUpdateDto.getIdNumber());
+		helperRepository.save(helper);
+	}
+
+	@Transactional
+	public void addElderId(Elder elder) {
+		Helper helper = (Helper)memberService.getCurrentMember();
+		helper.addElder(elder);
+		helperRepository.save(helper);
+	}
+
+	@Transactional
+	public void removeElderId(Elder elder) {
+		Helper helper = (Helper)memberService.getCurrentMember();
+		helper.removeElder(elder);
 		helperRepository.save(helper);
 	}
 

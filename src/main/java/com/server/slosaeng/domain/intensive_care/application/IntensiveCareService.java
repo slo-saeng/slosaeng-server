@@ -3,6 +3,8 @@ package com.server.slosaeng.domain.intensive_care.application;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.server.slosaeng.domain.elder.application.ElderService;
@@ -49,6 +51,16 @@ public class IntensiveCareService {
 				.elder(intensiveCare.getElder())
 				.build())
 			.collect(Collectors.toList());
+	}
+
+	public Page<IntensiveCareResponseDto> getIntensiveCareByPage(Pageable pageable) {
+		return intensiveCareRepository.findAll(pageable)
+			.map(intensiveCare -> IntensiveCareResponseDto.builder()
+				.id(intensiveCare.getId())
+				.info(intensiveCare.getInfo())
+				.grade(intensiveCare.getGrade())
+				.elder(intensiveCare.getElder())
+				.build());
 	}
 
 	public void update(Long intensiveCareId, IntensiveCareUpdateDto intensiveCareUpdateDto) {

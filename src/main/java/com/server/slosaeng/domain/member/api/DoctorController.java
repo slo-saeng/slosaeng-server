@@ -2,6 +2,9 @@ package com.server.slosaeng.domain.member.api;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.server.slosaeng.domain.member.application.DoctorService;
@@ -53,11 +57,38 @@ public class DoctorController {
 		return ApiResponse.success(doctorService.findById(doctorId), "Reading doctor succeed");
 	}
 
+	@GetMapping("")
+	@Operation(summary = "의료진 목록 조회")
+	public ApiResponse<?> getDoctors() {
+		List<DoctorResponseDto> doctors = doctorService.findAll();
+		return ApiResponse.success(doctors, "Reading doctors succeed");
+	}
+
+	@GetMapping("/page")
+	@Operation(summary = "의료진 페이징 조회")
+	public ApiResponse<?> getDoctorsPage(
+		@RequestParam(defaultValue = "0") int page,
+		@RequestParam(defaultValue = "10") int size
+	) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<DoctorResponseDto> doctors = doctorService.findAllByPage(pageable);
+		return ApiResponse.success(doctors, "Reading doctors by page succeed");
+	}
+
 	@GetMapping("/not-approved")
 	@Operation(summary = "미승인 의료진 조회")
 	public ApiResponse<?> getNotApprovedDoctors() {
 		List<DoctorResponseDto> notApprovedDoctors = doctorService.findNotApprovedDoctors();
 		return ApiResponse.success(notApprovedDoctors, "Reading not approved doctors succeed");
+	}
+
+	@GetMapping("/institution/{institutionNumber}")
+	@Operation(summary = "요양기관 의료진 조회")
+	public ApiResponse<?> getDoctorsByInstitution(
+		@PathVariable String institutionNumber
+	) {
+		List<DoctorResponseDto> doctors = doctorService.findByInstitutionNumber(institutionNumber);
+		return ApiResponse.success(doctors, "Reading doctors by institution succeed");
 	}
 
 	@PatchMapping("/{doctorId}")

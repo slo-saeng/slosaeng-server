@@ -1,11 +1,14 @@
 package com.server.slosaeng.domain.member.domain;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.server.slosaeng.domain.elder.domain.Elder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,8 +29,8 @@ public class Helper extends Member {
 	@Column(nullable = false)
 	private String idNumber;
 
-	@ElementCollection
-	private List<Long> elderIds;
+	@OneToMany(orphanRemoval = true)
+	private List<Elder> elders = new ArrayList<>();
 
 	public void updatePhone(String phone) {
 		this.phone = phone;
@@ -37,7 +40,12 @@ public class Helper extends Member {
 		this.idNumber = idNumber;
 	}
 
-	public void updateElderIds(List<Long> elderIds) {
-		this.elderIds = elderIds;
+	public void addElder(Elder elder) {
+		elders.add(elder);
 	}
+
+	public void removeElder(Elder elder) {
+		elders.remove(elder);
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.server.slosaeng.global.config;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -46,7 +47,7 @@ public class WebSecurityConfig {
 			CorsConfiguration config = new CorsConfiguration();
 			config.setAllowedHeaders(Collections.singletonList("*"));
 			config.setAllowedMethods(Collections.singletonList("*"));
-			config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:3000"));
+			config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "http://15.164.96.227:3000"));
 			config.setAllowCredentials(true);
 			return config;
 		};
